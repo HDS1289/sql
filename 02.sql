@@ -1,29 +1,216 @@
 select employee_id, last_name, department_id
 from employees
-where department_id = 90; -- í• ë‹¹ì´ ì•„ë‹Œ equalì´ë‹¤.
+where department_id = 90;
 
--- 176ë²ˆ ì‚¬ì›ì˜ ì‚¬ë²ˆ, ì´ë¦„, ë¶€ì„œë²ˆí˜¸ë¥¼ ì¡°íšŒí•˜ë ¤ë©´??
+-- 176¹øÀÇ »ç¿ø ½Å»óÁ¤º¸¸¦ ¾Ë¾Æ³»·Á ÇÑ´Ù??
 select employee_id, last_name, department_id
 from employees
 where employee_id = 176;
 
--- ìƒìˆ˜ ë¹„êµê°’ì´ character typeì´ë©´??
+-- »ó¼ö ºñ±³°ªÀÌ character typeÀÎ °æ¿ì
 select employee_id, last_name, department_id
 from employees
 where last_name = 'Whalen';
 
-
--- ì—°ì›”ì¼ì„ í‘œê¸°í•˜ëŠ” í˜•ì‹ì´ ë¬¸ì œ?? ==> ì˜¤ë¼í´ì´ ì•Œì•„ë“¤ì–´ì•¼..
--- ë‚ ì§œ í˜•ì‹ì„ ì–´ë–»ê²Œ ë³´ë‚´ì•¼ í•˜ëŠ”ì§€??
+-- ³¯Â¥ Å¸ÀÔÀÇ µ¥ÀÌÅÍ´Â??
 select employee_id, last_name, hire_date
 from employees
 where hire_date = '2008/02/06';
 
+select employee_id, last_name, hire_date
+from employees
+where hire_date = '08.02.06';
+
+select employee_id, last_name, hire_date
+from employees
+where hire_date = '08-02-06';
+
+select employee_id, last_name, hire_date
+from employees
+where hire_date = '2008/02/06'; -- YYYY/MM/DDÇü½ÄÀ¸·Î ¼³Á¤µÈ ÈÄ¿¡ Äõ¸® ¸í·É¾î°¡ ÀÔ·ÂµÈ °ÍÀÌ´Ù.
+
+-- ¿ù±ŞÀÌ $3,000 ¹Ì¸¸ÀÎ Á÷¿øµéÀ» Á¶È¸ÇÑ´Ù.
 select last_name, salary
 from employees
 where salary <= 3000;
 
--- ì›”ê¸‰ì´ $12,000 ì´ìƒ ë²„ëŠ” ì‚¬ì›ë“¤ì˜ ì´ë¦„ê³¼ ì›”ê¸‰ì„ ì¡°íšŒí•˜ë ¤ë©´??
+-- ¿ù±ŞÀÌ $12,000 ÀÌ»óÀÎ Á÷¿øµéÀ» Á¶È¸ÇÑ´Ù??
 select last_name, salary
 from employees
 where salary >= 12000;
+
+select last_name, job_id
+from employees
+where job_id != 'IT_PROG';
+
+-- SQL ¹üÀ§ ¿¬»êÀÚ between ~ and ~
+select last_name, salary
+from employees
+where salary between 2500 and 3500;
+-- 2500ÀÌ»ó 3500ÀÌÇÏ
+
+select last_name
+from employees
+where last_name between 'King' and 'Smith';
+
+-- 'King'»ç¿øÀÇ first name, last name, Á÷¾÷, ¿ù±Ş Á¶È¸
+select first_name, last_name, job_id, salary
+from employees
+where last_name = 'King';
+
+select last_name, hire_date
+from employees
+where hire_date between '2002/01/01' and '2002/12/31';
+
+-- in ¿¬»êÀÚ(~~~¿¡ ¼ÓÇÑ´Ù, ~~ÀÌ°Å³ª ~~ÀÌ´Ù.)
+select employee_id, last_name, manager_id
+from employees
+where manager_id in (100, 101, 201);
+
+select employee_id, last_name, manager_id
+from employees
+where manager_id = 100 or manager_id = 101 or manager_id = 201;
+
+select employee_id, last_name
+from employees
+where last_name in ('Hartstein', 'Vargas');
+
+select employee_id, hire_date
+from employees
+where hire_date in ('2003/06/17', '2005/09/21');
+
+-- like¿¬»êÀÚ, wild card % and _
+select last_name
+from employees
+where last_name like 'S%';
+-- Ã¹ ±ÛÀÚ´Â S¿©¾ß ÇÏ°í µÎ ¹øÂ° ±ÛÀÚºÎÅÍ´Â ¾Æ¹« ±ÛÀÚ³ª ¿Íµµ µÈ´Ù.
+
+-- 2005³âµµ¿¡ ÀÔ»çÇÑ »ç¿øµéÀÇ »ç¿ø¸í, ÀÔ»çÀÏÀ» Á¶È¸
+select last_name, hire_date
+from employees
+where hire_date like '2005%';
+
+select last_name
+from employees
+where last_name like '%r';
+-- ¸Ç ¸¶Áö¸· ±ÛÀÚ´Â rÀÌ¾î¾ß ÇÑ´Ù.
+
+-- ÀÌ¸§¿¡ -s-°¡ Æ÷ÇÔµÈ »ç¿ø¸í Á¶È¸
+select last_name
+from employees
+where last_name like '%s%';
+
+-- _´Â character 1°³¸¦ ¶æÇÑ´Ù.
+select last_name
+from employees
+where last_name like 'K___';
+
+-- ÀÌ¸§ÀÇ µÎ ¹øÂ° ±ÛÀÚ°¡ oÀÎ »ç¿ø¸í Á¶È¸
+select last_name
+from employees
+where last_name like '_o%';
+-- Ã¹ ¹øÂ° ±ÛÀÚ´Â ¾ğ´õ ¹Ù¿©¾ß ÇÑ´Ù.
+
+select job_id
+from employees;
+
+--escape character
+select last_name, job_id
+from employees
+where job_id like 'I_\_%' escape '\';
+
+select last_name, job_id
+from employees
+where job_id like '%\_R%' escape '\';
+
+select employee_id, last_name, manager_id
+from employees;
+
+-- ¿Ö Á¶È¸°¡ ¾È µÇÁö?? ==> null°ª??
+-- where ÀıÀº Á¶°Ç¹®ÀÌ´Ù. true°ªÀÌ ³ª¿À´Â ·¹ÄÚµå°¡ ¾ø±â ¶§¹®¿¡ ºó Å×ÀÌºíÀÌ ¹İÈ¯µÈ °ÍÀÌ´Ù.
+select employee_id, last_name, manager_id
+from employees
+where manager_id = null;
+
+select salary, job_id
+from employees
+where salary >= 5000 and job_id like '%IT%';
+
+select salary, job_id
+from employees
+where salary >= 5000 or job_id like '%IT%';
+
+-- ¿ù±ŞÀÌ 5000´Ş·¯ ÀÌ»ó 12000´Ş·¯ ÀÌÇÏÀÌ¸ç 20¹øÀÌ³ª 50¹ø ºÎ¼­¿¡¼­ ÀÏÇÏ´Â »ç¿øÀÇ »ç¿ø¸í, ¿ù±Ş, ºÎ¼­¹øÈ£ Á¶È¸
+select last_name, salary, department_id
+from employees
+where salary between 5000 and 12000 and department_id in (20, 50);
+
+-- ÀÌ¸§¿¡ a¿Í e°¡ Æ÷ÇÔµÈ »ç¿ø¸í Á¶È¸
+select last_name
+from employees
+where last_name like '%a%' and last_name like '%e%';
+
+-- not ¿¬»êÀÚ
+select last_name, salary
+from employees
+where salary not between 10000 and 15000;
+
+select last_name, job_id
+from employees
+where manager_id is not null;
+
+select last_name, job_id
+from employees
+where manager_id is null;
+
+select last_name, job_id
+from employees
+where commission_pct is null;
+
+select last_name, job_id
+from employees
+where commission_pct is not null;
+
+select last_name, job_id
+from employees
+where job_id not like '%IT%';
+
+select last_name, salary
+from employees
+where manager_id is null and salary >= 24000;
+
+select last_name, salary
+from employees
+where not (manager_id is null and salary >= 24000);
+
+-- Á÷¾÷ÀÌ ¿µ¾÷ÀÌ´Ù. ±×¸®°í ¿ù±ŞÀÌ 2000´Ş·¯, 3500´Ş·¯°¡ ¾Æ´Ï´Ù.
+-- À§ Á¶°Ç¿¡ ÇØ´çÇÏ´Â »ç¿øµéÀÇ ÀÌ¸§, Á÷¾÷, ¿ù±ŞÀ» Á¶È¸
+select last_name, job_id, salary
+from employees
+where salary not in (2000, 3500) and job_id like 'SA%';
+
+select last_name, department_id
+from employees
+order by department_id;
+
+select last_name, department_id
+from employees
+order by department_id desc;
+
+select last_name, department_id
+from employees
+order by 2;
+
+select last_name, department_id dept_id
+from employees
+order by department_id;
+
+select last_name, hire_date
+from employees
+where department_id = 100
+order by hire_date;
+
+select last_name, department_id, salary
+from employees
+where department_id > 80
+order by department_id asc, salary desc;
